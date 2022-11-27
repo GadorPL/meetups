@@ -1,43 +1,26 @@
+{% extends 'meetups_app/base/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
-    <link rel="stylesheet" href="{% static 'meetups_app/styles/base.css' %}">
+
+{% block title %}All Meetups{% endblock %}
+{% block site_css %}
     <link rel="stylesheet" href="{% static 'meetups_app/styles/all_meetups.css' %}">
-</head>
-<body>
-    <header id="main-header">
-        <nav><a href="/meetups_app" id="main-logo">DjangoMeetups</a></nav>
-        <h1>We got great meetups coming up</h1>
-        <p>Find the one that best suits your needs!</p>
-    </header>
-    <main>
-        <section>
-            <h2>Upcoming Meetups</h2>
-            <ol>
-                {% for meetup_item in meetups %}
-                    <li class="meetup-item">
-                        <article>
-                            <div class="meetup-summary">
-                                <div class="meetup-image">
-                                    <img src="" alt="">
-                                </div>
-                                <div class="meetup-details">
-                                    <h3>{{ meetup_item.title }}</h3>
-                                    <address>{{ meetup_item.location }}</address>
-                                </div>
-                            </div>
-                            <div class="meetup-actions">
-                                <a href="{% url 'meetup-detail' meetup_item.slug %}" class="btn">More Details</a>
-                            </div>
-                        </article>
-                    </li>
-                {% endfor %}
-            </ol>
-        </section>
-    </main>
-</body>
-</html>
+{% endblock %}
+
+{% block main_heading %}
+    We got great meetups coming up!
+{% endblock %}
+
+{% block header_content %}
+    <p>Find the one that best suits your needs!</p>
+{% endblock %}
+
+{% block body %}
+    <section>
+        <h2>Upcoming Meetups</h2>
+        <ol>
+            {% for meetup_item in meetups %}
+                {% include 'meetups_app/includes/meetup-item.html' with title=meetup_item.title location=meetup_item.location %}
+            {% endfor %}
+        </ol>
+    </section>
+{% endblock %}
